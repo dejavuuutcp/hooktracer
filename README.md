@@ -1,11 +1,11 @@
 useless lua🤮
 # HookTracer
-A lightweight profiler for Garry's Mod Lua hooks.
+A lightweight profiler for Garry’s Mod Lua hooks.
 Tracks which hooks are called, how often, and how long they take to run.
 ## Notes
 - **Only hooks executed via `hook.Call` are traced.**
 Hooks added with `hook.Add` are not automatically profiled unless the event itself is fired through `hook.Call`.
-- Engine-level hooks like `Think` or `CreateMove` are called internally in C++ and won't appear in reports.
+- Engine-level hooks like `Think` or `CreateMove` are called internally in C++ and won’t appear in reports.
 ## Commands
 hooktracer_start - start tracing
 hooktracer_stop - stop tracing
