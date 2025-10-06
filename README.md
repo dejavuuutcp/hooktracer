@@ -8,18 +8,23 @@ Hooks added with `hook.Add` are not automatically profiled unless the event itse
 - Engine-level hooks like `Think` or `CreateMove` are called internally in C++ and won’t appear in reports.
 ## Commands
 hooktracer_start - start tracing
+
 hooktracer_stop - stop tracing
+
 hooktracer_stats - show collected stats
+
 hooktracer_problems - slow/frequent hooks
+
 hooktracer_export - export JSON
+
 hooktracer_clear - clear data
+
 hooktracer_threshold - set slow hook threshold [ms]
+
 hooktracer_live - show slow hooks live in consol
 ## Usage
 1. Place `hooktracer.lua` in `lua/autorun/`.
 2. Run in console:
 hooktracer_start
-hooktracer_stats
-hooktracer_problems
 3. To save report:
 4. hooktracer_export
