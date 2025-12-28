@@ -47,8 +47,6 @@ tr_stop           // Stop profiling
 
 ## Technical Details
 
-## Technical Details
-
 **What gets traced:**
 - All hooks called through `hook.Call()` system
 - Any hook registered with `hook.Add()` (Lua or engine-level)
