@@ -1,30 +1,86 @@
-useless lua🤮
 # HookTracer
-A lightweight profiler for Garry’s Mod Lua hooks.
-Tracks which hooks are called, how often, and how long they take to run.
-## Notes
-- **Only hooks executed via `hook.Call` are traced.**
-Hooks added with `hook.Add` are not automatically profiled unless the event itself is fired through `hook.Call`.
-- Engine-level hooks like `Think` or `CreateMove` are called internally in C++ and won’t appear in reports.
+
+Lightweight performance profiler for Garry's Mod hooks with real-time monitoring and statistical analysis.
+
+## Features
+
+- **Real-time profiling** - Track hook execution time and frequency
+- **Live monitoring** - See slow hooks as they happen
+- **Smart detection** - Automatic identification of performance issues
+- **Memory efficient** - Object pooling and optimized data structures
+- **Color-coded output** - Visual severity indicators in console
+- **JSON export** - Detailed reports for external analysis
+
+## Installation
+
+Drop `hooktracer.lua` into `lua/autorun/client/`
+
+## Quick Start
+```
+tr_start          // Begin profiling
+tr_stats          // View statistics
+tr_issues         // Check for problems
+tr_stop           // Stop profiling
+```
+
 ## Commands
-hooktracer_start - start tracing
 
-hooktracer_stop - stop tracing
+| Command | Description |
+|---------|-------------|
+| `tr_start` | Start tracing hooks |
+| `tr_stop` | Stop tracing |
+| `tr_stats` | Display performance statistics |
+| `tr_issues` | Show detected performance problems |
+| `tr_export` | Export data to JSON |
+| `tr_clear` | Clear all collected data |
+| `tr_threshold <ms>` | Set slow hook threshold (default: 1ms) |
+| `tr_live` | Toggle live slow hook monitoring |
+| `tr_unhook` | Restore original hook system |
 
-hooktracer_stats - show collected stats
+## Performance Indicators
 
-hooktracer_problems - slow/frequent hooks
+**Severity Levels:**
+- 🔴 **HIGH** - Hooks averaging >5ms (critical)
+- 🟠 **MEDIUM** - Hooks called >1000 times or with 10x spikes
+- 🟢 **OK** - Normal performance
 
-hooktracer_export - export JSON
+## Technical Details
 
-hooktracer_clear - clear data
+**What gets traced:**
+- All hooks called via `hook.Call()`
+- Custom hooks added with `hook.Add()`
+- GameMode functions (GM:*)
 
-hooktracer_threshold - set slow hook threshold [ms]
+**What doesn't get traced:**
+- Engine-level C++ hooks (Think, CreateMove, etc.)
+- Direct function calls bypassing hook system
+- Hooks added after tracer starts (until re-initialization)
 
-hooktracer_live - show slow hooks live in consol
-## Usage
-1. Place `hooktracer.lua` in `lua/autorun/`.
-2. Run in console:
-hooktracer_start
-3. To save report:
-4. hooktracer_export
+## Example Output
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ HOOK TRACER STATISTICS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Tracked Hooks: 45 │ Total Calls: 8234
+
+▼ SLOWEST HOOKS (by average)
+ 1. HUDPaint
+    2.34ms avg │ 8.91ms max │ 312 calls
+ 2. PlayerTick
+    0.89ms avg │ 2.10ms max │ 1450 calls
+```
+
+## Export Format
+
+JSON structure:
+```json
+{
+  "entries": [...],
+  "stats": {...},
+  "timestamp": 1735459200,
+  "date": "Sun Dec 29 2024",
+  "threshold": 1.0,
+  "entry_count": 1000,
+  "stat_count": 45
+}
+```
