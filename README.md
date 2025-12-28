@@ -47,15 +47,21 @@ tr_stop           // Stop profiling
 
 ## Technical Details
 
+## Technical Details
+
 **What gets traced:**
-- All hooks called via `hook.Call()`
-- Custom hooks added with `hook.Add()`
-- GameMode functions (GM:*)
+- All hooks called through `hook.Call()` system
+- Any hook registered with `hook.Add()` (Lua or engine-level)
+- GameMode functions (GM:Think, GM:PlayerTick, etc.)
+- Nested hook calls with depth tracking
 
 **What doesn't get traced:**
-- Engine-level C++ hooks (Think, CreateMove, etc.)
-- Direct function calls bypassing hook system
-- Hooks added after tracer starts (until re-initialization)
+- Direct function calls that bypass `hook.Call()`
+- Code executed before tracer initialization
+- Functions called outside the hook system
+
+**How it works:**
+The tracer intercepts `hook.Call()` at runtime, so ANY hook that goes through the hook system gets traced - whether it's Lua-based or engine-level doesn't matter. The key is that it must use `hook.Call()`.
 
 ## Example Output
 ```
