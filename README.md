@@ -1,3 +1,4 @@
+useless lua🤮
 # HookTracer
 
 Lightweight performance profiler for Garry's Mod hooks with real-time monitoring and statistical analysis.
@@ -59,28 +60,52 @@ tr_stop           // Stop profiling
 ## Example Output
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- HOOK TRACER STATISTICS
+ STATISTICS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Tracked Hooks: 45 │ Total Calls: 8234
+Hooks: 22 │ Calls: 10000
 
-▼ SLOWEST HOOKS (by average)
- 1. HUDPaint
-    2.34ms avg │ 8.91ms max │ 312 calls
- 2. PlayerTick
-    0.89ms avg │ 2.10ms max │ 1450 calls
+ SLOWEST (avg)
+ 1. OnSpawnMenuOpen
+    5.56ms avg | 9.97ms max | 3 calls
+ 2. OnSpawnMenuClose
+    2.27ms avg | 2.88ms max | 3 calls
 ```
 
 ## Export Format
-
 JSON structure:
 ```json
 {
-  "entries": [...],
-  "stats": {...},
   "timestamp": 1735459200,
-  "date": "Sun Dec 29 2024",
+  "date": "2024-12-29 14:30:00",
   "threshold": 1.0,
   "entry_count": 1000,
-  "stat_count": 45
+  "stat_count": 45,
+  "stats": {
+    "HookName": {
+      "calls": 5000,
+      "total_time": 250.5,
+      "avg_time": 0.0501,
+      "max_time": 2.3,
+      "min_time": 0.01
+    }
+  },
+  "data": [
+    {
+      "name": "HookName",
+      "duration": 0.05,
+      "time": 12345.678,
+      "depth": 0,
+      "slow": false
+    }
+  ]
 }
 ```
+
+**Fields:**
+- `timestamp`: Unix timestamp of export
+- `date`: Human-readable date in `YYYY-MM-DD HH:MM:SS` format
+- `threshold`: Slowness threshold in milliseconds
+- `entry_count`: Total number of recorded hook calls
+- `stat_count`: Number of unique hooks tracked
+- `stats`: Per-hook statistics (calls, times in ms)
+- `data`: Array of individual hook call records
